@@ -113,13 +113,13 @@ module openAi 'modules/openai.bicep' = if (enableOpenAI) {
       {
         name: 'gpt-4'
         model: 'gpt-4'
-        version: '0613'
+        version: '1106-Preview'
         capacity: 10
       }
       {
         name: 'gpt-35-turbo'
         model: 'gpt-35-turbo'
-        version: '0613'
+        version: '0125'
         capacity: 10
       }
     ]

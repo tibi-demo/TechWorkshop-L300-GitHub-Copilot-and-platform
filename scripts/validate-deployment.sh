@@ -25,9 +25,10 @@ fi
 echo "✅ Azure CLI is installed and logged in"
 echo ""
 
-# Get current subscription
-SUBSCRIPTION_NAME=$(az account show --query name -o tsv)
-SUBSCRIPTION_ID=$(az account show --query id -o tsv)
+# Get current subscription info
+ACCOUNT_INFO=$(az account show --query '{name:name, id:id}' -o json)
+SUBSCRIPTION_NAME=$(echo "$ACCOUNT_INFO" | jq -r '.name')
+SUBSCRIPTION_ID=$(echo "$ACCOUNT_INFO" | jq -r '.id')
 echo "📋 Current Subscription: $SUBSCRIPTION_NAME"
 echo "   ID: $SUBSCRIPTION_ID"
 echo ""
@@ -108,7 +109,7 @@ fi
 
 # Check Application Insights
 echo -n "Application Insights: "
-APPINSIGHTS_NAME=$(az monitor app-insights component show --resource-group "$RG_NAME" --query "[0].name" -o tsv 2>/dev/null)
+APPINSIGHTS_NAME=$(az monitor app-insights component list --resource-group "$RG_NAME" --query "[0].name" -o tsv 2>/dev/null)
 if [ -n "$APPINSIGHTS_NAME" ]; then
     APPINSIGHTS_KEY=$(az monitor app-insights component show --app "$APPINSIGHTS_NAME" --resource-group "$RG_NAME" --query instrumentationKey -o tsv)
     echo "✅ $APPINSIGHTS_NAME"

@@ -65,6 +65,19 @@ echo "🔨 Building container image in Azure Container Registry..."
 echo "  (This is a cloud-based build - no local Docker required)"
 echo ""
 
+# Validate source directory exists
+if [ ! -d "./src" ]; then
+    echo "❌ Source directory './src' not found"
+    echo "   Please run this script from the repository root directory"
+    exit 1
+fi
+
+if [ ! -f "./Dockerfile" ]; then
+    echo "❌ Dockerfile not found in current directory"
+    echo "   Please run this script from the repository root directory"
+    exit 1
+fi
+
 # Build and push image using ACR
 IMAGE_TAG=$(date +%Y%m%d-%H%M%S)
 az acr build \

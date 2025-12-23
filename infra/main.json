@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.39.26.7824",
-      "templateHash": "17834854845558753731"
+      "templateHash": "7270157091894780663"
     }
   },
   "parameters": {
@@ -695,13 +695,13 @@
               {
                 "name": "gpt-4",
                 "model": "gpt-4",
-                "version": "0613",
+                "version": "1106-Preview",
                 "capacity": 10
               },
               {
                 "name": "gpt-35-turbo",
                 "model": "gpt-35-turbo",
-                "version": "0613",
+                "version": "0125",
                 "capacity": 10
               }
             ]
