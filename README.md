@@ -1,6 +1,73 @@
 # Project
 
-This lab guides you through a series of practical exercises focused on modernising Zava's business applications and databases by migrating everything to Azure, leveraging GitHub Enterprise, Copilot, and Azure services. Each exercise is designed to deliver hands-on experience in governance, automation, security, AI integration, and observability, ensuring Zava’s transition to Azure is robust, secure, and future-ready.
+This lab guides you through a series of practical exercises focused on modernising Zava's business applications and databases by migrating everything to Azure, leveraging GitHub Enterprise, Copilot, and Azure services. Each exercise is designed to deliver hands-on experience in governance, automation, security, AI integration, and observability, ensuring Zava's transition to Azure is robust, secure, and future-ready.
+
+## ZavaStorefront Application
+
+ZavaStorefront is a .NET 6.0 web application that demonstrates modern cloud-native development practices on Azure. The application is containerized and deployed to Azure App Service using Azure Container Registry, with integrated monitoring via Application Insights and AI capabilities through Azure OpenAI.
+
+### Quick Start
+
+#### Prerequisites
+- [Azure CLI](https://learn.microsoft.com/cli/azure/install-azure-cli) (v2.50.0+)
+- [Azure Developer CLI (azd)](https://learn.microsoft.com/azure/developer/azure-developer-cli/install-azd) (recommended)
+- Azure subscription with appropriate permissions
+
+#### Deploy Infrastructure and Application
+
+Using Azure Developer CLI (recommended):
+
+```bash
+# Login to Azure
+azd auth login
+
+# Initialize the project (first time only)
+azd init
+
+# Provision infrastructure and deploy application
+azd up
+```
+
+For detailed deployment instructions and alternative methods, see the [Infrastructure README](infra/README.md).
+
+### Repository Structure
+
+```
+.
+├── .github/
+│   └── workflows/         # GitHub Actions workflows
+├── infra/                 # Azure infrastructure (Bicep templates)
+│   ├── modules/           # Reusable Bicep modules
+│   ├── main.bicep         # Main infrastructure template
+│   └── README.md          # Detailed infrastructure documentation
+├── src/                   # ZavaStorefront .NET application
+├── Dockerfile             # Container image definition
+└── azure.yaml             # Azure Developer CLI configuration
+```
+
+### Infrastructure Overview
+
+The application is deployed to Azure using Infrastructure as Code (Bicep templates). Key components:
+
+- **Azure Container Registry**: Stores container images
+- **App Service (Linux)**: Hosts the containerized application
+- **Application Insights**: Application monitoring and telemetry
+- **Azure OpenAI**: GPT-4 and GPT-3.5 Turbo for AI capabilities
+
+All resources are provisioned in the **westus3** region for optimal performance and AI model availability.
+
+**Security Features:**
+- System-assigned managed identity for secure ACR access
+- No password-based authentication (Azure RBAC with AcrPull role)
+- HTTPS-only endpoints
+- Application Insights for security monitoring
+
+**Cost Optimization:**
+- Dev environment uses minimal-cost SKUs (Basic ACR, B1 App Service)
+- Estimated monthly cost: ~$20-30 for dev environment
+- Resources can be stopped when not in use
+
+For complete infrastructure documentation, deployment options, and troubleshooting, see [infra/README.md](infra/README.md).
 
 ## Contributing
 
