@@ -1,0 +1,66 @@
+# azure.yaml
+# Azure Developer CLI (azd) configuration for ZavaStorefront
+
+name: zavastore
+metadata:
+  template: zavastore@0.0.1-beta
+
+# Define the services
+services:
+  web:
+    project: ./src
+    language: dotnet
+    host: containerapp
+    docker:
+      path: ./Dockerfile
+      context: ./src
+
+# Define infrastructure
+infra:
+  provider: bicep
+  path: infra
+  module: main
+
+# Pipeline configuration
+pipeline:
+  provider: github
+
+# Hooks for deployment workflow
+hooks:
+  preprovision:
+    posix:
+      shell: sh
+      run: echo "Preparing to provision Azure resources..."
+      continueOnError: false
+    windows:
+      shell: pwsh
+      run: echo "Preparing to provision Azure resources..."
+      continueOnError: false
+  
+  postprovision:
+    posix:
+      shell: sh
+      run: |
+        echo "Azure resources provisioned successfully"
+        echo "ACR Login Server: $AZURE_CONTAINER_REGISTRY_ENDPOINT"
+      continueOnError: false
+    windows:
+      shell: pwsh
+      run: |
+        echo "Azure resources provisioned successfully"
+        echo "ACR Login Server: $AZURE_CONTAINER_REGISTRY_ENDPOINT"
+      continueOnError: false
+
+  predeploy:
+    posix:
+      shell: sh
+      run: |
+        echo "Building and pushing container image to ACR..."
+        az acr build --registry $(azd env get-value AZURE_CONTAINER_REGISTRY_NAME) --image zavastore:latest --file Dockerfile ./src
+      continueOnError: false
+    windows:
+      shell: pwsh
+      run: |
+        echo "Building and pushing container image to ACR..."
+        az acr build --registry $(azd env get-value AZURE_CONTAINER_REGISTRY_NAME) --image zavastore:latest --file Dockerfile ./src
+      continueOnError: false

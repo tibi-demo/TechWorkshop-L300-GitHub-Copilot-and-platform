@@ -144,3 +144,11 @@ desktop.ini
 !/.gitattributes
 !/.gitignore
 .DS_Store
+
+# Azure / azd
+.azure/
+*.parameters.json
+!*.parameters.dev.json
+*.bicepparam
+azd-env/
+.env.azure
