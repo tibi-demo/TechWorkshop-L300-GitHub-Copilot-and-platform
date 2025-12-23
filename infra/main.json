@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.39.26.7824",
-      "templateHash": "9437024319981948022"
+      "templateHash": "17834854845558753731"
     }
   },
   "parameters": {
@@ -875,6 +875,34 @@
         "description": "The Azure OpenAI endpoint"
       },
       "value": "[if(parameters('enableOpenAI'), reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, variables('resourceGroupName')), 'Microsoft.Resources/deployments', 'openai-deployment'), '2025-04-01').outputs.endpoint.value, 'not-deployed')]"
+    },
+    "AZURE_RESOURCE_GROUP": {
+      "type": "string",
+      "metadata": {
+        "description": "The resource group name for azd"
+      },
+      "value": "[variables('resourceGroupName')]"
+    },
+    "AZURE_CONTAINER_REGISTRY_NAME": {
+      "type": "string",
+      "metadata": {
+        "description": "The container registry name for azd"
+      },
+      "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, variables('resourceGroupName')), 'Microsoft.Resources/deployments', 'acr-deployment'), '2025-04-01').outputs.acrName.value]"
+    },
+    "AZURE_CONTAINER_REGISTRY_ENDPOINT": {
+      "type": "string",
+      "metadata": {
+        "description": "The container registry endpoint for azd"
+      },
+      "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, variables('resourceGroupName')), 'Microsoft.Resources/deployments', 'acr-deployment'), '2025-04-01').outputs.loginServer.value]"
+    },
+    "AZURE_WEBAPP_NAME": {
+      "type": "string",
+      "metadata": {
+        "description": "The web app name for azd"
+      },
+      "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, variables('resourceGroupName')), 'Microsoft.Resources/deployments', 'webapp-deployment'), '2025-04-01').outputs.webAppName.value]"
     }
   }
 }

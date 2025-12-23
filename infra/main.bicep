@@ -148,3 +148,16 @@ output appInsightsConnectionString string = appInsights.outputs.connectionString
 
 @description('The Azure OpenAI endpoint')
 output openAiEndpoint string = enableOpenAI ? openAi.outputs.endpoint : 'not-deployed'
+
+// Additional outputs for azd environment variables
+@description('The resource group name for azd')
+output AZURE_RESOURCE_GROUP string = resourceGroupName
+
+@description('The container registry name for azd')
+output AZURE_CONTAINER_REGISTRY_NAME string = acr.outputs.acrName
+
+@description('The container registry endpoint for azd')
+output AZURE_CONTAINER_REGISTRY_ENDPOINT string = acr.outputs.loginServer
+
+@description('The web app name for azd')
+output AZURE_WEBAPP_NAME string = webApp.outputs.webAppName

@@ -146,6 +146,13 @@ If you prefer to use Azure CLI without azd:
    ```
 
 4. **Build and push the Docker image**:
+   
+   Using the deployment script (recommended):
+   ```bash
+   ./scripts/deploy.sh
+   ```
+   
+   Or manually:
    ```bash
    az acr build \
      --registry $ACR_NAME \
