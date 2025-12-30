@@ -21,7 +21,7 @@ param enableOpenAI bool = true
 var resourceGroupName = 'rg-${appName}-${environmentName}-${location}'
 var acrName = 'acr${appName}${environmentName}${uniqueString(subscription().subscriptionId, resourceGroupName)}'
 var appServicePlanName = 'asp-${appName}-${environmentName}-${location}'
-var webAppName = 'app-${appName}-${environmentName}-${location}'
+var webAppName = 'app-${appName}-${uniqueString(subscription().subscriptionId, resourceGroupName)}'
 var appInsightsName = 'appi-${appName}-${environmentName}-${location}'
 var openAiName = 'oai-${appName}-${environmentName}-${location}'
 
@@ -111,15 +111,9 @@ module openAi 'modules/openai.bicep' = if (enableOpenAI) {
     sku: 'S0'
     deployments: [
       {
-        name: 'gpt-4'
-        model: 'gpt-4'
-        version: '1106-Preview'
-        capacity: 10
-      }
-      {
-        name: 'gpt-35-turbo'
-        model: 'gpt-35-turbo'
-        version: '0125'
+        name: 'gpt-4o-mini'
+        model: 'gpt-4o-mini'
+        version: '2024-07-18'
         capacity: 10
       }
     ]
