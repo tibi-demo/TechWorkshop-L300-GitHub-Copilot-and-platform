@@ -12,7 +12,7 @@ param appServicePlanId string
 param containerRegistryLoginServer string
 
 @description('The Docker image and tag')
-param dockerImageAndTag string = 'nginx:latest'
+param dockerImageAndTag string = 'zavastorefront:latest'
 
 @description('Application Insights connection string')
 param appInsightsConnectionString string = ''

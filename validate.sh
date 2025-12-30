@@ -117,7 +117,7 @@ APPINSIGHTS_NAME=$(az monitor app-insights component list --resource-group "$RES
 if [ -n "$APPINSIGHTS_NAME" ]; then
     echo -e "${GREEN}✓ Application Insights found: $APPINSIGHTS_NAME${NC}"
     INSTRUMENTATION_KEY=$(az monitor app-insights component show --app "$APPINSIGHTS_NAME" --resource-group "$RESOURCE_GROUP" --query "instrumentationKey" -o tsv)
-    echo -e "  Instrumentation Key: ${INSTRUMENTATION_KEY:0:8}...${INSTRUMENTATION_KEY: -8}"
+    echo -e "  Instrumentation Key: ${INSTRUMENTATION_KEY:0:8}...${INSTRUMENTATION_KEY:(-8)}"
 else
     echo -e "${RED}✗ Application Insights not found${NC}"
 fi
