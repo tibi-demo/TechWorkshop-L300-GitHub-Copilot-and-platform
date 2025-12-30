@@ -26,7 +26,6 @@ param tags object = {
 }
 
 // Generate unique resource names
-var resourceGroupPrefix = 'rg-${baseName}-${environmentName}-${location}'
 var acrName = 'acr${baseName}${environmentName}${uniqueString(resourceGroup().id)}'
 var appServicePlanName = 'asp-${baseName}-${environmentName}-${location}'
 var webAppName = 'app-${baseName}-${environmentName}-${uniqueString(resourceGroup().id)}'
@@ -109,10 +108,6 @@ module roleAssignment 'modules/role-assignment.bicep' = {
     principalId: webApp.outputs.principalId
     containerRegistryId: containerRegistry.outputs.id
   }
-  dependsOn: [
-    webApp
-    containerRegistry
-  ]
 }
 
 // Deploy Storage Account for AI Foundry
@@ -143,19 +138,13 @@ module aiFoundryHub 'modules/ai-foundry-hub.bicep' = {
     name: aiFoundryHubName
     location: location
     friendlyName: 'ZavaStorefront AI Hub'
-    description: 'AI Foundry Hub for ZavaStorefront with GPT-4o-mini and Phi-4 access'
+    hubDescription: 'AI Foundry Hub for ZavaStorefront with GPT-4o-mini and Phi-4 access'
     storageAccountId: storageAccount.outputs.id
     keyVaultId: keyVault.outputs.id
     appInsightsId: appInsights.outputs.id
     containerRegistryId: containerRegistry.outputs.id
     tags: tags
   }
-  dependsOn: [
-    storageAccount
-    keyVault
-    appInsights
-    containerRegistry
-  ]
 }
 
 // Deploy AI Foundry Project
@@ -165,13 +154,10 @@ module aiFoundryProject 'modules/ai-foundry-project.bicep' = {
     name: aiFoundryProjectName
     location: location
     friendlyName: 'ZavaStorefront AI Project'
-    description: 'AI Foundry Project for ZavaStorefront development'
+    projectDescription: 'AI Foundry Project for ZavaStorefront development'
     hubId: aiFoundryHub.outputs.id
     tags: tags
   }
-  dependsOn: [
-    aiFoundryHub
-  ]
 }
 
 // Outputs

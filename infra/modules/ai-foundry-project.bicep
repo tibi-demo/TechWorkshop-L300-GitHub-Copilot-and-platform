@@ -9,7 +9,7 @@ param location string = resourceGroup().location
 param friendlyName string = name
 
 @description('The description of the AI Foundry Project')
-param description string = 'AI Foundry Project for ZavaStorefront'
+param projectDescription string = 'AI Foundry Project for ZavaStorefront'
 
 @description('AI Foundry Hub ID')
 param hubId string
@@ -27,7 +27,7 @@ resource aiFoundryProject 'Microsoft.MachineLearningServices/workspaces@2024-04-
   }
   properties: {
     friendlyName: friendlyName
-    description: description
+    description: projectDescription
     hubResourceId: hubId
     publicNetworkAccess: 'Enabled'
   }
